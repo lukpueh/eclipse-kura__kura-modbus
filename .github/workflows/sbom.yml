@@ -18,9 +18,13 @@ on:
 permissions:
   contents: read
   packages: read
+  # The shared workflow authenticates the SBOM upload with OIDC; a
+  # called workflow cannot request more permission than its caller.
+  id-token: write
 
 jobs:
   call-workflow-in-public-repo:
-    uses: eclipse-kura/.github/.github/workflows/_shared-sbom-cyclonedx.yml@main
+    # STAGING: the fork carries the migration and `staging: true`.
+    uses: lukpueh/eclipse-kura__.github/.github/workflows/_shared-sbom-cyclonedx.yml@sbom-staging-test
     with:
       dependency-track-id: '88b926a2-2d26-4262-ae4d-0dd69a66f4ac'
